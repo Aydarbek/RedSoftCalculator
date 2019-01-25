@@ -1,0 +1,6 @@
+D:\Projects\RedSoftQuiz\RedSoftQuiz\bin\Debug\RedSoftQuiz.exe.config
+D:\Projects\RedSoftQuiz\RedSoftQuiz\bin\Debug\RedSoftQuiz.exe
+D:\Projects\RedSoftQuiz\RedSoftQuiz\bin\Debug\RedSoftQuiz.pdb
+D:\Projects\RedSoftQuiz\RedSoftQuiz\obj\Debug\RedSoftQuiz.csprojResolveAssemblyReference.cache
+D:\Projects\RedSoftQuiz\RedSoftQuiz\obj\Debug\RedSoftQuiz.exe
+D:\Projects\RedSoftQuiz\RedSoftQuiz\obj\Debug\RedSoftQuiz.pdb

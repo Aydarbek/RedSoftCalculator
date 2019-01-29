@@ -1,58 +1,97 @@
 ﻿using System;
+using System.Data;
+using System.Text.RegularExpressions;
 
 namespace RedSoftQuiz
 {
-    class Calculator
+    public class Calculator
     {
         static void Main()
         {
-            string inStr = Console.ReadLine();
+
+
+            string inStr = " 8 *13 + 44 + 7 *4";
             double Result = Calculate(inStr);
-            
-            Console.WriteLine(Result);
+            double Verify = 8 * 13 + 44 + 7 * 4;
+
+
+            Console.WriteLine("Result: " + Result);
+            Console.WriteLine("Verify: " +  Verify);
             Console.Read();
+        }
+
+        public static double CalcCS(string inStr)
+        {
+            DataTable dt = new DataTable();
+            var v = dt.Compute(inStr, "");
+
+            return double.Parse(v.ToString());
         }
 
         public static double Calculate (string inStr)
         {
-            string[] RangOne;
+            string[] RangOneString;
             double[] RangTwoDouble;
 
+            
 
-            RangOne = inStr.Split('+', '-');
-            string[] AddOrSubtr = inStr.Split(RangOne, StringSplitOptions.RemoveEmptyEntries);
 
-            RangTwoDouble = new double[RangOne.Length];
-
-            for (int i = 0; i < RangOne.Length; i++)
+            RangOneString = inStr.Split('+', '-');
+            string[] RangTwoOpers = Regex.Split(inStr, @"[\s/0-9*/]+");
+            string[] RangTwoOpersNew = new string[RangTwoOpers.Length];
+            int j = 0;
+            for (int i = 0; i < RangTwoOpers.Length; i++)
             {
-                if (!double.TryParse(RangOne[i], out RangTwoDouble[i]))
-                    RangTwoDouble[i] = MakeRang1Calculation(RangOne[i]);
+                
+                if (RangTwoOpers[i] !="")                
+                    RangTwoOpersNew[j++] = RangTwoOpers[i];
             }
 
-            for (int i = 0; i < AddOrSubtr.Length; i++)
-            {
-                RangTwoDouble[i + 1] = Arith(RangTwoDouble[i], RangTwoDouble[i + 1], AddOrSubtr[i]);
-            }
+                
 
-            return RangTwoDouble[RangTwoDouble.Length - 1];
+            RangTwoDouble = new double[RangOneString.Length];
+            
+                        
 
+            for (int i = 0; i < RangOneString.Length; i++)
+                if (!double.TryParse(RangOneString[i], out RangTwoDouble[i]))
+                    RangTwoDouble[i] = MakeRang1Calculation(RangOneString[i]);
+
+            return SimpleCalc(RangTwoDouble, RangTwoOpersNew);
         }
 
 
-        private static double MakeRang1Calculation(string rangOne)
+        private static double SimpleCalc(string[] nums, string[] opers)
+        {
+            double result = double.Parse(nums[0]);
+
+            for (int i = 1; i < nums.Length; i++)
+                result = Arith(result.ToString(), nums[i], opers[i - 1]);
+
+            return result;
+        }
+
+        private static double SimpleCalc(double[] nums, string[] opers)
+        {
+            double result = nums[0];
+
+            for (int i = 1; i < nums.Length; i++)
+                result = Arith(result.ToString(), nums[i].ToString(), opers[i - 1]);
+
+            return result;
+        }
+
+
+        public static double MakeRang1Calculation(string rangOne)
         {
             string[] Nums = rangOne.Split('*', '/');
             string[] Opers = rangOne.Split(Nums, StringSplitOptions.RemoveEmptyEntries);
-            double result = 1;
-            
-            for (int i = 0; i < Opers.Length; i++)
-            {
-                Nums[i + 1] = Arith(Nums[i], Nums[i + 1], Opers[i]).ToString();
-            }
 
-            return double.Parse(Nums[Nums.Length - 1]);
+            return SimpleCalc(Nums, Opers);            
         }
+
+
+
 
         private static double Arith (string Num1, string Num2, string oper)
         {

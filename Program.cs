@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Text.RegularExpressions;
 
 namespace RedSoftQuiz
@@ -8,50 +7,34 @@ namespace RedSoftQuiz
     {
         static void Main()
         {
-
-
-            string inStr = " 8 *13 + 44 + 7 *4";
+            string inStr = "1 - 7 * 2 / 0";
             double Result = Calculate(inStr);
-            double Verify = 8 * 13 + 44 + 7 * 4;
 
+            double Verify = 8 * 12 + 4 + 7 * 4;
 
             Console.WriteLine("Result: " + Result);
             Console.WriteLine("Verify: " +  Verify);
             Console.Read();
         }
 
-        public static double CalcCS(string inStr)
-        {
-            DataTable dt = new DataTable();
-            var v = dt.Compute(inStr, "");
-
-            return double.Parse(v.ToString());
-        }
 
         public static double Calculate (string inStr)
         {
             string[] RangOneString;
             double[] RangTwoDouble;
 
-            
+            string RangZero = MakeBracketsCalculation(inStr.TrimEnd('='));
 
-
-            RangOneString = inStr.Split('+', '-');
-            string[] RangTwoOpers = Regex.Split(inStr, @"[\s/0-9*/]+");
+            RangOneString = RangZero.Split('+', '-');
+            string[] RangTwoOpers = Regex.Split(RangZero, @"[\s/0-9*/]+");
             string[] RangTwoOpersNew = new string[RangTwoOpers.Length];
-            int j = 0;
-            for (int i = 0; i < RangTwoOpers.Length; i++)
-            {
-                
-                if (RangTwoOpers[i] !="")                
-                    RangTwoOpersNew[j++] = RangTwoOpers[i];
-            }
 
-                
+            int j = 0;
+            for (int i = 0; i < RangTwoOpers.Length; i++)                
+                if (RangTwoOpers[i] !="")                
+                    RangTwoOpersNew[j++] = RangTwoOpers[i];                
 
             RangTwoDouble = new double[RangOneString.Length];
-            
-                        
 
             for (int i = 0; i < RangOneString.Length; i++)
                 if (!double.TryParse(RangOneString[i], out RangTwoDouble[i]))
@@ -60,6 +43,26 @@ namespace RedSoftQuiz
             return SimpleCalc(RangTwoDouble, RangTwoOpersNew);
         }
 
+        private static string MakeBracketsCalculation(string inStr)
+        {
+            string brackets = @"\(.*?\)";
+            string[] Expr = new string[5];
+            int i = 0;
+
+            foreach (var x in Regex.Matches(inStr, brackets))
+                Expr[i++] = x.ToString();
+
+            foreach (string s in Expr)
+            {
+                if (s != null)
+                {
+                    double num = Calculate(s.Trim('(', ')'));
+                    inStr = inStr.Replace(s, num.ToString());
+                }                    
+            }
+
+            return inStr;
+        }
 
         private static double SimpleCalc(string[] nums, string[] opers)
         {
@@ -89,8 +92,6 @@ namespace RedSoftQuiz
 
             return SimpleCalc(Nums, Opers);            
         }
-
-
 
 
         private static double Arith (string Num1, string Num2, string oper)

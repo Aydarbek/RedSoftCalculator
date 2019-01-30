@@ -7,61 +7,85 @@ namespace RedSoftQuiz
     {
         static void Main()
         {
-            string inStr = "1 - 7 * 2 / 0";
-            double Result = Calculate(inStr);
+           
+                string inStr = Console.ReadLine();
+                string Result = Calculate(inStr);
 
-            double Verify = 8 * 12 + 4 + 7 * 4;
-
-            Console.WriteLine("Result: " + Result);
-            Console.WriteLine("Verify: " +  Verify);
-            Console.Read();
+                Console.WriteLine(Result);
+                Console.Read();
         }
+        
 
-
-        public static double Calculate (string inStr)
+        public static string Calculate (string inStr)
         {
-            string[] RangOneString;
-            double[] RangTwoDouble;
+            try
+            {
+                string RangOneString;
+                string[] RangTwoString;
+                string[] RangThreeString;
+                string[] RangThreeOpers;
 
-            string RangZero = MakeBracketsCalculation(inStr.TrimEnd('='));
+                RangOneString = RangOneCalculate(inStr.TrimEnd('='));
 
-            RangOneString = RangZero.Split('+', '-');
-            string[] RangTwoOpers = Regex.Split(RangZero, @"[\s/0-9*/]+");
-            string[] RangTwoOpersNew = new string[RangTwoOpers.Length];
+                RangTwoString = RangOneString.Split('+', '-');
 
-            int j = 0;
-            for (int i = 0; i < RangTwoOpers.Length; i++)                
-                if (RangTwoOpers[i] !="")                
-                    RangTwoOpersNew[j++] = RangTwoOpers[i];                
+                RangThreeString = RangTwoCalculate(RangTwoString);
+                RangThreeOpers = RemoveNulls(Regex.Split(RangOneString, @"[\s/0-9*/,]+"));
 
-            RangTwoDouble = new double[RangOneString.Length];
-
-            for (int i = 0; i < RangOneString.Length; i++)
-                if (!double.TryParse(RangOneString[i], out RangTwoDouble[i]))
-                    RangTwoDouble[i] = MakeRang1Calculation(RangOneString[i]);
-
-            return SimpleCalc(RangTwoDouble, RangTwoOpersNew);
+                return RangThreeCalculate(RangThreeString, RangThreeOpers);
+            } catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.Read();
+                }
+            return "";
         }
 
-        private static string MakeBracketsCalculation(string inStr)
+
+        private static string RangOneCalculate(string input)
         {
             string brackets = @"\(.*?\)";
-            string[] Expr = new string[5];
+            string[] Expr = new string[Regex.Matches(input, brackets).Count];
             int i = 0;
 
-            foreach (var x in Regex.Matches(inStr, brackets))
+            foreach (var x in Regex.Matches(input, brackets))
                 Expr[i++] = x.ToString();
 
             foreach (string s in Expr)
-            {
                 if (s != null)
                 {
-                    double num = Calculate(s.Trim('(', ')'));
-                    inStr = inStr.Replace(s, num.ToString());
-                }                    
-            }
+                    string num = Calculate(s.Trim('(', ')'));
+                    input = input.Replace(s, num);
+                }
 
-            return inStr;
+            return input;
+        }
+
+        private static string[] RangTwoCalculate(string[] input)
+        {
+            double[] ResultsDouble = new double[input.Length];
+            string[] ResultsString = new string [ResultsDouble.Length];
+            for (int i = 0; i < input.Length; i++)
+                if (!double.TryParse(input[i], out ResultsDouble[i]))
+                    ResultsDouble[i] = RangTwoSimpleCalculate(input[i]);
+
+            for (int i = 0; i < ResultsDouble.Length; i++)
+                ResultsString[i] = ResultsDouble[i].ToString();
+
+            return ResultsString;
+        }
+
+        private static double RangTwoSimpleCalculate(string input)
+        {
+            string[] Nums = input.Split('*', '/');
+            string[] Opers = input.Split(Nums, StringSplitOptions.RemoveEmptyEntries);
+
+            return SimpleCalc(Nums, Opers);
+        }
+
+        private static string RangThreeCalculate(string[] rangThreeDouble, string[] rangThreeOpers)
+        {
+            return SimpleCalc(rangThreeDouble, rangThreeOpers).ToString();
         }
 
         private static double SimpleCalc(string[] nums, string[] opers)
@@ -74,26 +98,6 @@ namespace RedSoftQuiz
             return result;
         }
 
-        private static double SimpleCalc(double[] nums, string[] opers)
-        {
-            double result = nums[0];
-
-            for (int i = 1; i < nums.Length; i++)
-                result = Arith(result.ToString(), nums[i].ToString(), opers[i - 1]);
-
-            return result;
-        }
-
-
-        public static double MakeRang1Calculation(string rangOne)
-        {
-            string[] Nums = rangOne.Split('*', '/');
-            string[] Opers = rangOne.Split(Nums, StringSplitOptions.RemoveEmptyEntries);
-
-            return SimpleCalc(Nums, Opers);            
-        }
-
-
         private static double Arith (string Num1, string Num2, string oper)
         {
             switch (oper)
@@ -105,17 +109,15 @@ namespace RedSoftQuiz
                 default: return 0;
             }
         }
-
-        private static double Arith(double Num1, double Num2, string oper)
+        private static string[] RemoveNulls(string[] input)
         {
-            switch (oper)
-            {
-                case "+": return Num1 + Num2;
-                case "-": return Num1 - Num2;
-                case "*": return Num1 * Num2;
-                case "/": return Num1 / Num2;
-                default: return 0;
-            }
+            string[] output = new string[input.Length];
+            int j = 0;
+            for (int i = 0; i < input.Length; i++)
+                if (input[i] != "")
+                    output[j++] = input[i];
+
+            return output;
         }
     }
 }

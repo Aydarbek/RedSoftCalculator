@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedSoftQuiz", "RedSoftQuiz.csproj", "{E9D64AC8-62C3-4071-83CB-A64117E2A8D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedSoftQuizTests", "..\RedSoftQuizTests\RedSoftQuizTests.csproj", "{6175BA9C-4AF5-4A86-BC20-CB2254E97236}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedSoftQuizTests", "RedSoftQuizTests\RedSoftQuizTests.csproj", "{6175BA9C-4AF5-4A86-BC20-CB2254E97236}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

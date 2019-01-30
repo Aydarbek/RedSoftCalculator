@@ -1,0 +1,16 @@
+D:\Projects\RedSoftQuiz\RedSoftQuizTests\bin\Debug\RedSoftQuizTests.dll
+D:\Projects\RedSoftQuiz\RedSoftQuizTests\bin\Debug\RedSoftQuizTests.pdb
+D:\Projects\RedSoftQuiz\RedSoftQuizTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Projects\RedSoftQuiz\RedSoftQuizTests\bin\Debug\RedSoftQuiz.exe
+D:\Projects\RedSoftQuiz\RedSoftQuizTests\bin\Debug\RedSoftQuiz.pdb
+D:\Projects\RedSoftQuiz\RedSoftQuizTests\obj\Debug\RedSoftQuizTests.csprojResolveAssemblyReference.cache
+D:\Projects\RedSoftQuiz\RedSoftQuizTests\obj\Debug\RedSoftQuizTests.dll
+D:\Projects\RedSoftQuiz\RedSoftQuizTests\obj\Debug\RedSoftQuizTests.pdb
+D:\Projects\RedSoftQuiz\RedSoftQuiz\RedSoftQuizTests\bin\Debug\RedSoftQuizTests.dll
+D:\Projects\RedSoftQuiz\RedSoftQuiz\RedSoftQuizTests\bin\Debug\RedSoftQuizTests.pdb
+D:\Projects\RedSoftQuiz\RedSoftQuiz\RedSoftQuizTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Projects\RedSoftQuiz\RedSoftQuiz\RedSoftQuizTests\bin\Debug\RedSoftQuiz.exe
+D:\Projects\RedSoftQuiz\RedSoftQuiz\RedSoftQuizTests\bin\Debug\RedSoftQuiz.pdb
+D:\Projects\RedSoftQuiz\RedSoftQuiz\RedSoftQuizTests\obj\Debug\RedSoftQuizTests.csprojResolveAssemblyReference.cache
+D:\Projects\RedSoftQuiz\RedSoftQuiz\RedSoftQuizTests\obj\Debug\RedSoftQuizTests.dll
+D:\Projects\RedSoftQuiz\RedSoftQuiz\RedSoftQuizTests\obj\Debug\RedSoftQuizTests.pdb
